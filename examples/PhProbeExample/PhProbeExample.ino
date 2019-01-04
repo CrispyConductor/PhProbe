@@ -8,7 +8,7 @@ void setup() {
   Serial.begin(9600);
   // Configure amplifier parameters
   phprobe.calibrationValues.ampOffset = 2.0f;
-  phprobe.calibrationValues.ampGain = 4.9f;
+  phprobe.calibrationValues.ampGain = -4.9f;
 }
 
 void loop() {

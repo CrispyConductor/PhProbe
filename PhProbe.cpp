@@ -18,23 +18,30 @@ uint16_t PhProbe::readRaw(uint8_t samples) {
 }
 
 uint16_t PhProbe::readStableValue(uint8_t samples) {
-	uint16_t countdown = stabilizeDelaySecs * 1000;
-	uint16_t cycleTime = (samples - 1) * sampleInterval + 30;
+	//uint16_t countdown = stabilizeDelaySecs * 1000;
+	//uint16_t cycleTime = (samples - 1) * sampleInterval + 30;
+	unsigned long endTime = millis() + stabilizeDelaySecs * 1000;
 	int8_t lastDirection = 0;
 	uint16_t lastValue = 0;
 	for (;;) {
 		uint16_t value = readRaw(samples);
 		if (value == lastValue) {
+			/*
 			if (countdown <= cycleTime) {
 				return value;
 			} else {
 				countdown -= cycleTime;
 			}
+			*/
+			if (millis() >= endTime) {
+				return value;
+			}
 		} else {
-			countdown = stabilizeDelaySecs * 1000;
+			//countdown = stabilizeDelaySecs * 1000;
+			endTime = millis() + stabilizeDelaySecs * 1000;
 			int8_t direction = (value > lastValue) ? 1 : -1;
 			if (lastDirection != 0 && direction != lastDirection) {
-				delay(countdown);
+				delay(stabilizeDelaySecs * 1000);
 				return readRaw(samples);
 			}
 			if (lastValue != 0) {

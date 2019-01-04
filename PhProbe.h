@@ -28,7 +28,7 @@ class PhProbe {
 		uint8_t numSamples = 5;
 		uint8_t numCalibrationSamples = 10;
 		// Wait time (milliseconds) between each sample
-		uint8_t sampleInterval = 100;
+		uint8_t sampleInterval = 1;
 		// Seconds to wait for value to stabilize when enabled
 		uint16_t stabilizeDelaySecs = 6;
 
